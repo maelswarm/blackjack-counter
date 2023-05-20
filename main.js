@@ -1,6 +1,7 @@
 const Big = require('big.js');
 
 let count = 0;
+let DECK_COUNT = -1
 
 class BigDecimal {
     constructor(value) {
@@ -11,7 +12,7 @@ class BigDecimal {
     static fromBigInt(bigint) {
         return Object.assign(Object.create(BigDecimal.prototype), { bigint });
     }
-    divide(divisor) { // You would need to provide methods for other operations
+    divide(divisor) {
         return BigDecimal.fromBigInt(this.bigint * BigInt("1" + "0".repeat(BigDecimal.decimals)) / divisor.bigint);
     }
     toString() {
@@ -22,42 +23,22 @@ class BigDecimal {
 }
 BigDecimal.decimals = 18;
 
-const DEFS = {
-    ACE: 1,
-    TWO: 2,
-    THREE: 3,
-    FOUR: 4,
-    FIVE: 5,
-    SIX: 6,
-    SEVEN: 7,
-    EIGHT: 8,
-    NINE: 9,
-    TEN: 10,
-    JACK: 11,
-    QUEEN: 12,
-    KING: 13,
-    DECK_COUNT: 8
-};
-
 let cards_count_length = 13;
 let cards_count = [];
-for (let i = 0; i < cards_count_length; ++i) {
-    cards_count.push(4 * DEFS.DECK_COUNT);
-}
 
-let TOTAL_CARDS = DEFS.DECK_COUNT * 13 * 4;
+
+let TOTAL_CARDS = DECK_COUNT * 13 * 4;
 let DRAWN_CARDS = 0;
 
-const ftl = (i) => {
+const f = (i) => {
     let i1 = BigInt(i);
     let i2 = BigInt(i);
     if (i2 <= 0) {
         return 1n;
     }
     while (i2 > 1n) {
-        i1 *= i2;
         --i2;
-        //printf("%d\n", i1);
+        i1 *= i2;
     }
     return i1;
 }
@@ -65,13 +46,12 @@ const ftl = (i) => {
 const calc_draw_chance = (idx) => {
 
     let N = TOTAL_CARDS - DRAWN_CARDS;
-    let K = cards_count[idx];
+    let k = cards_count[idx];
     let n = 1;
-    let k = 1;
-    //console.log((ftl(K) + ftl(N - K) + ftl(n) + ftl(N - n)).toString(), (ftl(N) + ftl(k) + ftl(K - k) + ftl(n - k) + ftl(N - K - n + k)).toString());
-    let p1 = new Big((ftl(K) * ftl(N - K) * ftl(n) * ftl(N - n)).toString())
-    let p2 = new Big((ftl(N) * ftl(k) * ftl(K - k) * ftl(n - k) * ftl(N - K - n + k)).toString());
-    return p1.div(p2);
+    let x = 1;
+    let a1 = (new Big(f(k))).div((new Big(f(x)).times(f(k - x)))).times(new Big(f(N - k))).div((new Big(f((N - k) - (n - x))).times(f(n - x))));
+    let a2 = (new Big(f(N))).div((new Big(f(n)).times(f(N - n))));
+    return a1.div(a2);
 }
 
 const calcCount = (i1) => {
@@ -84,27 +64,42 @@ const calcCount = (i1) => {
 
 function main() {
     let i1;
-
+    console.log("Welcome to BlackJack counter.");
+    process.stdout.write("Please enter ahow many decks are in the shoe: ");
     process.stdin.on('data', function (input) {
+
         let i1 = parseInt(input.toString().trim());
         if (!(i1 > 0 && i1 < 14)) {
             return;
         }
-        if(cards_count[i1 - 1] < 1) {
-            return;
-        }
-        --cards_count[i1 - 1];
-        ++DRAWN_CARDS;
-        for (let i = 0; i < cards_count_length; ++i) {
-            let f1 = calc_draw_chance(i);
-            process.stdout.write(i + 1 + ':' + cards_count[i] + '/' + 4 * DEFS.DECK_COUNT + ' ' + f1.toString() + "\n");
-            for (let z = 0; z < cards_count[i]; ++z) {
-                process.stdout.write("|");
+
+        if (DECK_COUNT === -1) {
+            DECK_COUNT = Number(i1);
+            for (let i = 0; i < cards_count_length; ++i) {
+                cards_count.push(4 * DECK_COUNT);
             }
-            process.stdout.write("\n");
+            TOTAL_CARDS = DECK_COUNT * 13 * 4;
+            console.log("1 := Ace, 2 := Two ... 11 := Jack 12 := Queen 13 := King");
+            process.stdout.write("Please enter a card number to remove it: ");
+        } else {
+            if (cards_count[i1 - 1] < 1) {
+                return;
+            }
+            --cards_count[i1 - 1];
+            ++DRAWN_CARDS;
+            for (let i = 0; i < cards_count_length; ++i) {
+                let f1 = calc_draw_chance(i);
+                process.stdout.write("Remaining: " + (i + 1) + ' ' + cards_count[i] + '/' + 4 * DECK_COUNT + ' Chance of next draw: ' + (f1 * 100).toFixed(2) + "%\n");
+                for (let z = 0; z < cards_count[i]; ++z) {
+                    process.stdout.write("|");
+                }
+                process.stdout.write("\n");
+            }
+            calcCount(i1);
+            console.log("HiLo count:" + count);
+            console.log("1 := Ace, 2 := Two ... 11 := Jack 12 := Queen 13 := King");
+            process.stdout.write("Please enter a card number to remove it: ");
         }
-        calcCount(i1);
-        console.log("count:" + count);
     });
 }
 
