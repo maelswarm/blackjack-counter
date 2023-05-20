@@ -15,7 +15,7 @@ Then enter the cards to remove from the deck.
 Each time a card is removed, your terminal will display the stats on each card by number value.
 
 ```
-1 := Ace, 2 := Two ... 11 := Jack 12 := Queen 13 := King
+1 := Ace, 2 := Two ... 11 := Jack, 12 := Queen, 13 := King
 Please enter a card number to remove it: 1
 Remaining: 1 27/32 Chance of next draw: 7.32%
 |||||||||||||||||||||||||||
