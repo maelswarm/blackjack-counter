@@ -15,35 +15,34 @@ Then enter the cards to remove from the deck.
 Each time a card is removed, your terminal will display the stats on each card by number value.
 
 ```
-1 := Ace, 2 := Two ... 11 := Jack, 12 := Queen, 13 := King
-Please enter a card number to remove it: 1
-Remaining: 1 27/32 Chance of next draw: 7.32%
-|||||||||||||||||||||||||||
-Remaining: 2 29/32 Chance of next draw: 7.86%
-||||||||||||||||||||||||||
-Remaining: 2 29/32 Chance of next draw: 7.88%
-|||||||||||||||||||||||||||||
-Remaining: 3 26/32 Chance of next draw: 7.07%
-||||||||||||||||||||||||||
-Remaining: 4 28/32 Chance of next draw: 7.61%
-||||||||||||||||||||||||||||
-Remaining: 5 31/32 Chance of next draw: 8.42%
-|||||||||||||||||||||||||||||||
-Remaining: 6 28/32 Chance of next draw: 7.61%
-||||||||||||||||||||||||||||
-Remaining: 7 28/32 Chance of next draw: 7.61%
-||||||||||||||||||||||||||||
-Remaining: 8 30/32 Chance of next draw: 8.15%
-||||||||||||||||||||||||||||||
-Remaining: 9 27/32 Chance of next draw: 7.34%
-|||||||||||||||||||||||||||
-Remaining: 10 31/32 Chance of next draw: 8.42%
-|||||||||||||||||||||||||||||||
-Remaining: 11 32/32 Chance of next draw: 8.70%
-||||||||||||||||||||||||||||||||
-Remaining: 12 32/32 Chance of next draw: 8.70%
-||||||||||||||||||||||||||||||||
-Remaining: 13 20/32 Chance of next draw: 5.43%
+1 := Ace, 2 := Two ... 11 := Jack 12 := Queen 13 := King
+Please enter a card number to remove it: 12
+Remaining: A 22/24 Chance of next draw: 8.76%
+||||||||||||||||||||||
+Remaining: 2 21/24 Chance of next draw: 8.37%
+|||||||||||||||||||||
+Remaining: 3 16/24 Chance of next draw: 6.37%
+||||||||||||||||
+Remaining: 4 16/24 Chance of next draw: 6.37%
+||||||||||||||||
+Remaining: 5 18/24 Chance of next draw: 7.17%
+||||||||||||||||||
+Remaining: 6 14/24 Chance of next draw: 5.58%
+||||||||||||||
+Remaining: 7 22/24 Chance of next draw: 8.76%
+||||||||||||||||||||||
+Remaining: 8 17/24 Chance of next draw: 6.77%
+|||||||||||||||||
+Remaining: 9 18/24 Chance of next draw: 7.17%
+||||||||||||||||||
+Remaining: 10 23/24 Chance of next draw: 9.16%
+|||||||||||||||||||||||
+Remaining: J 23/24 Chance of next draw: 9.16%
+|||||||||||||||||||||||
+Remaining: Q 21/24 Chance of next draw: 8.37%
+|||||||||||||||||||||
+Remaining: K 20/24 Chance of next draw: 7.97%
 ||||||||||||||||||||
-HiLo count:-1
+HiLo count:24
+|                                -----------------------O       |
 ```
