@@ -1,5 +1,7 @@
 const Big = require('big.js');
 
+const cards_name = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
+
 let count = 0;
 let DECK_COUNT = -1
 
@@ -89,7 +91,7 @@ function main() {
             ++DRAWN_CARDS;
             for (let i = 0; i < cards_count_length; ++i) {
                 let f1 = calc_draw_chance(i);
-                process.stdout.write("Remaining: " + (i + 1) + ' ' + cards_count[i] + '/' + 4 * DECK_COUNT + ' Chance of next draw: ' + (f1 * 100).toFixed(2) + "%\n");
+                process.stdout.write("Remaining: " + cards_name[(i)] + ' ' + cards_count[i] + '/' + 4 * DECK_COUNT + ' Chance of next draw: ' + (f1 * 100).toFixed(2) + "%\n");
                 for (let z = 0; z < cards_count[i]; ++z) {
                     process.stdout.write("|");
                 }
@@ -97,6 +99,17 @@ function main() {
             }
             calcCount(i1);
             console.log("HiLo count:" + count);
+            process.stdout.write("|");
+            for (let i = -31; i < 32; ++i) {
+                if (count === i || (count > 31 || count < -31) && Math.abs(count) === i) {
+                    process.stdout.write("O");
+                } else if (count < 0 && count < i && i < 0 || count > 0 && count > i && i > 0) {
+                    process.stdout.write("-");
+                } else {
+                    process.stdout.write(" ");
+                }
+            }
+            process.stdout.write("|\n");
             console.log("1 := Ace, 2 := Two ... 11 := Jack 12 := Queen 13 := King");
             process.stdout.write("Please enter a card number to remove it: ");
         }
